@@ -1,45 +1,78 @@
 import numpy as np
 
-words = np.array([l.strip() for l in open('words')])
 
-counts = {}
+def init():
+    words = np.array([l.strip() for l in open('words')])
 
-for letter in 'abcdefghijklmnopqrstuvwxyz':
-    count = 0
-    for word in words:
-        if letter in word: count += 1 #word.count(letter) # doppelte buchstaben werden nicht gezählt
-    counts[letter] = count
+    counts = {}
 
-scores = {}
-for word in words:
-    score = 0
-    wordset = set(word)
-    for letter in wordset:
-        score += counts[letter]
-    scores[word] = score
+    for letter in 'abcdefghijklmnopqrstuvwxyz':
+        count = 0
+        for w in words:
+            if letter in w:
+                count += 1  # word.count(letter) # doppelte buchstaben werden nicht gezählt
+        counts[letter] = count
+
+    scores = {}
+    for w in words:
+        score = 0
+        wordset = set(w)
+        for letter in wordset:
+            score += counts[letter]
+        scores[w] = score
+
+    sorted_keys = sorted(scores, key=scores.get)
+    sorted_keys.reverse()
+
+    return sorted_keys
 
 
-sorted_keys = sorted(scores, key=scores.get)
-sorted_keys.reverse()
-sorted_scores = {}
-for w in sorted_keys:
-    sorted_scores[w] = scores[w]
-
-sorted_words = list(sorted_scores.keys())
-while len(sorted_words) > 1:
-    word = input('your guess: ')
-    answer = input('answer: ')
-    # TODO: catch invalid inputs
-
-    for i in range(len(word)):
-        if int(answer[i]) == 0:
-            sorted_words = [x for x in sorted_words if word[i] not in x]
-        elif int(answer[i]) == 1:
-            sorted_words = [x for x in sorted_words if word[i] in x]
-        elif int(answer[i]) == 2:
-            sorted_words = [x for x in sorted_words if word[i] == x[i]]
+def solve(s,w,ans):
+    for i in range(len(w)):
+        if int(ans[i]) == 0:
+            s = [x for x in s if w[i] not in x]
+        elif int(ans[i]) == 1:
+            s = [x for x in s if w[i] in x] # gleiche Stelle? rausschmeißen!
+        elif int(ans[i]) == 2:
+            s = [x for x in s if w[i] == x[i]]
         else:
             print('Error')
-    print(sorted_words)
+    if len(s) > 1:
+        if w in s:#kann weg wenn oben gefixt
+            s.remove(w)
+        print(s)
+        print('Your next guess should be:', s[0])
+    return s
 
-print('The correct solution is', sorted_words[0])
+def check(ans):
+    if len(ans) != 5:
+        return False
+    l=[]
+    for a in ans:
+        l.append(int(a) == 0 or int(a) == 1 or int(a) == 2 )
+    return all(l)
+
+
+def main():
+    sorted_words = init()
+
+    while len(sorted_words) > 1:
+        # check for invalid inputs
+        while True:
+            word = input('your guess: ')
+            if word in sorted_words:
+                break
+            print('invalid input')
+        while True:
+            answer = input('answer: ')
+            if check(answer):
+                break
+            print('invalid input')
+
+        sorted_words = solve(sorted_words,word,answer)
+
+    print('The correct solution is', sorted_words[0])
+
+
+if __name__ == '__main__':
+    main()

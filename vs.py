@@ -1,5 +1,5 @@
-import solver_new as s
-import game_new as g
+import solver as s
+import game as g
 
 
 def game(solution):
