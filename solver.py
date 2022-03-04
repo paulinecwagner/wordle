@@ -37,7 +37,8 @@ def solve(s,w,ans):
             s = [x for x in s if w[i] == x[i]]
         else:
             print('Error')
-    if len(s) > 1:
+    if ans!='22222':
+    #if len(s)>1:
         if w in s:#kann weg wenn oben gefixt
             s.remove(w)
         print(s)
