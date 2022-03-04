@@ -42,15 +42,37 @@ def solve(s,w,ans):
     print(s)
     return s
 
+def check(ans):
+    if len(ans) != 5:
+        return False
+    l=[]
+    for a in ans:
+        l.append(int(a) == 0 or int(a) == 1 or int(a) == 2 )
+    return all(l)
+
+
 def main():
     sorted_words = init()
 
     while len(sorted_words) > 1:
-        word = input('your guess: ')
-        answer = input('answer: ')
+        # check for invalid inputs
+        while True:
+            word = input('your guess: ')
+            if word in words:
+                break
+            print('invalid input')
+        while True:
+            answer = input('answer: ')
+            if check(answer):
+                break
+            print('invalid input')
+
         sorted_words = solve(sorted_words,word,answer)
+
     print('The correct solution is', sorted_words[0])
 
 
 if __name__ == '__main__':
-    main()
+    #main()
+
+    print(check('00000'))
