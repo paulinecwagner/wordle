@@ -23,13 +23,8 @@ def init():
 
     sorted_keys = sorted(scores, key=scores.get)
     sorted_keys.reverse()
-    sorted_scores = {}
-    for w in sorted_keys:
-        sorted_scores[w] = scores[w]
 
-    s = list(sorted_scores.keys())
-
-    return s
+    return sorted_keys
 
 
 def solve(s,w,ans):
@@ -37,7 +32,7 @@ def solve(s,w,ans):
         if int(ans[i]) == 0:
             s = [x for x in s if w[i] not in x]
         elif int(ans[i]) == 1:
-            s = [x for x in s if w[i] in x]
+            s = [x for x in s if w[i] in x] # gleiche Stelle? rausschmeißen!
         elif int(ans[i]) == 2:
             s = [x for x in s if w[i] == x[i]]
         else:
@@ -47,7 +42,7 @@ def solve(s,w,ans):
     print(s)
     return s
 
-if __name__ == '__main__':
+def main():
     sorted_words = init()
 
     while len(sorted_words) > 1:
@@ -57,3 +52,5 @@ if __name__ == '__main__':
     print('The correct solution is', sorted_words[0])
 
 
+if __name__ == '__main__':
+    main()
