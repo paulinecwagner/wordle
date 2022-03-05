@@ -10,7 +10,6 @@ def init():
 
 
 def play(sol, w, valids):
-
     ans = ""
     if not w in valids:
         print_(f"{w} is not valid")
