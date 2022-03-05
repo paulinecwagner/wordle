@@ -26,8 +26,7 @@ def play(sol, w, valids):
     print_("answer: ", ans)
     return ans
 
-
-if __name__ == "__main__":
+def start_game():
     solution, valid_words = init()
     answer = ""
     count = 0
@@ -39,3 +38,4 @@ if __name__ == "__main__":
     print_("bing bong", word, "is correct")
     print_('this took ', count, 'guesses')
 
+if __name__ == "__main__":

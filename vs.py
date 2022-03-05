@@ -1,26 +1,28 @@
 import solver as s
 import game as g
 from datetime import datetime
-
+from copy import copy
+from util import print_
 
 def game(solution):
     count = 0
     sorted_words = s.init()
+    all_words = copy(sorted_words)
     answer = ''
     while answer != '22222':
         count += 1
         guess = sorted_words[0]
-        answer = g.play(solution, guess)
+        answer = g.play(solution, guess, all_words)
         sorted_words = s.solve(sorted_words, guess, answer)
-    print('bing bong', guess, 'is correct')
-    print('this took ', count, 'guesses')
+    print_('bing bong', guess, 'is correct')
+    print_('this took ', count, 'guesses')
     return guess, count
 
 def how_many_guesses():
     sorted_words = s.init()
     hmg = {}
     for element in sorted_words:
-        print('##### ', element)
+        print_('##### ', element)
         word, count = game(element)
         hmg[word] = count
 
@@ -48,7 +50,10 @@ def main():
     #game(g.init())
     #game('giant')
 
-    print(how_many_guesses())
+    start = datetime.now()
+    print_(how_many_guesses())
+    finish = datetime.now()
+    print(f"runtime: {finish - start}")
 
 if __name__ == '__main__':
     main()

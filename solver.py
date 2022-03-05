@@ -1,4 +1,5 @@
 import numpy as np
+from  util import print_
 
 def init():
     words = np.array([l.strip() for l in open('words')])
@@ -37,10 +38,12 @@ def solve(s,w,ans):
         elif int(ans[i]) == 2:
             s = [x for x in s if w[i] == x[i]]
         else:
-            print('Error')
+            print_('Error')
     if ans!='22222':
-        print(s)
-        print('Your next guess should be:', s[0])
+        if not s:
+            raise ValueError('No solution')
+        print_(s)
+        print_('Your next guess should be:', s[0])
     return s
 
 def check(ans):
@@ -61,16 +64,16 @@ def main():
             word = input('your guess: ')
             if word in sorted_words:
                 break
-            print('invalid input')
+            print_('invalid input')
         while True:
             answer = input('answer: ')
             if check(answer):
                 break
-            print('invalid input')
+            print_('invalid input')
 
         sorted_words = solve(sorted_words,word,answer)
 
-    print('The correct solution is', sorted_words[0])
+    print_('The correct solution is', sorted_words[0])
 
 
 if __name__ == '__main__':
