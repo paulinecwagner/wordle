@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def init():
     words = np.array([l.strip() for l in open('words')])
 
@@ -9,8 +8,9 @@ def init():
     for letter in 'abcdefghijklmnopqrstuvwxyz':
         count = 0
         for w in words:
-            if letter in w:
-                count += 1  # word.count(letter) # doppelte buchstaben werden nicht gezählt
+            count += w.count(letter)
+            #if letter in w:
+                #count += 1  # w.count(letter) # doppelte buchstaben werden nicht gezählt
         counts[letter] = count
 
     scores = {}
@@ -19,6 +19,7 @@ def init():
         wordset = set(w)
         for letter in wordset:
             score += counts[letter]
+        score += len(wordset)*10000
         scores[w] = score
 
     sorted_keys = sorted(scores, key=scores.get)
@@ -32,15 +33,12 @@ def solve(s,w,ans):
         if int(ans[i]) == 0:
             s = [x for x in s if w[i] not in x]
         elif int(ans[i]) == 1:
-            s = [x for x in s if w[i] in x] # gleiche Stelle? rausschmeißen!
+            s = [x for x in s if w[i] in x and w[i]!=x[i]]
         elif int(ans[i]) == 2:
             s = [x for x in s if w[i] == x[i]]
         else:
             print('Error')
     if ans!='22222':
-    #if len(s)>1:
-        if w in s:#kann weg wenn oben gefixt
-            s.remove(w)
         print(s)
         print('Your next guess should be:', s[0])
     return s

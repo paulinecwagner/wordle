@@ -29,7 +29,7 @@ def how_many_guesses():
 
     g = open('stats.txt', 'a')
     stat = ' - average:' + str(avg_guesses) + ' / maximum:'+ str(max_guesses)
-    g.write(datetime.now(), stat)
+    g.write(str(datetime.now())+ str(stat)+'\n')
 
 
     '''sorted_keys_hmg = sorted(hmg, key=hmg.get)
@@ -47,6 +47,7 @@ def how_many_guesses():
 def main():
     #game(g.init())
     #game('giant')
+
     print(how_many_guesses())
 
 if __name__ == '__main__':
